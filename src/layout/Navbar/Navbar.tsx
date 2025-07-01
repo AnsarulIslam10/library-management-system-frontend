@@ -5,9 +5,9 @@ export default function Navbar() {
     <div className="flex justify-between items-center">
       <h1 className="text-4xl font-bold">LMS</h1>
       <div className="flex gap-4">
-        <Link to={"/all-books"}>All Books</Link>
-        <Link to={"/add-books"}>Add Books</Link>
-        <Link to={"borrow-summary"}>Borrow Summary</Link>
+        <Link to={"/books"}>All Books</Link>
+        <Link to={"/create-book"}>Add Books</Link>
+        <Link to={"/borrow-summary"}>Borrow Summary</Link>
       </div>
     </div>
   );

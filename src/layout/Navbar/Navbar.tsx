@@ -1,14 +1,37 @@
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 
 export default function Navbar() {
   return (
-    <div className="flex justify-between items-center">
-      <h1 className="text-4xl font-bold">LMS</h1>
-      <div className="flex gap-4">
-        <Link to={"/books"}>All Books</Link>
-        <Link to={"/create-book"}>Add Books</Link>
-        <Link to={"/borrow-summary"}>Borrow Summary</Link>
+    <nav className="flex items-center justify-between p-4">
+      <div>
+        <h1>LMS</h1>
       </div>
-    </div>
+      <div className="flex gap-4">
+        <NavLink
+          to="/books"
+          className={({ isActive }) =>
+            isActive ? "underline font-bold" : "hover:underline"
+          }
+        >
+          All Books
+        </NavLink>
+        <NavLink
+          to="/create-book"
+          className={({ isActive }) =>
+            isActive ? "underline font-bold" : "hover:underline"
+          }
+        >
+          Add Book
+        </NavLink>
+        <NavLink
+          to="/borrow-summary"
+          className={({ isActive }) =>
+            isActive ? "underline font-bold" : "hover:underline"
+          }
+        >
+          Borrow Summary
+        </NavLink>
+      </div>
+    </nav>
   );
 }

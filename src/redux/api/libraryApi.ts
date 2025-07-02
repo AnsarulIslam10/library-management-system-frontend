@@ -16,6 +16,13 @@ export interface Borrow {
     quantity: number;
     dueDate: string;
 }
+export interface BorrowSummary {
+    book: {
+        title: string;
+        isbn: string;
+    };
+    totalQuantity: number;
+}
 
 export const libraryApi = createApi({
     reducerPath: 'libraryApi',
@@ -57,8 +64,20 @@ export const libraryApi = createApi({
                 body
             }),
             invalidatesTags: ['Borrows', 'Books']
-        })
+        }),
+        getBorrowSummary: builder.query<
+            { book: { title: string; isbn: string }; totalQuantity: number }[],
+            void
+        >({
+            query: () => 'borrow',
+            transformResponse: (response: {
+                success: boolean;
+                message: string;
+                data: { book: { title: string; isbn: string }; totalQuantity: number }[];
+            }) => response.data,
+            providesTags: ['Borrows'],
+        }),
     })
 })
 
-export const { useGetBooksQuery, useCreateBookMutation, useDeleteBookMutation, useBorrowBookMutation, useGetBookByIdQuery } = libraryApi;
+export const { useGetBooksQuery, useCreateBookMutation, useDeleteBookMutation, useBorrowBookMutation, useGetBookByIdQuery, useGetBorrowSummaryQuery } = libraryApi;

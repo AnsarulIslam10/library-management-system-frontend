@@ -42,7 +42,7 @@ export default function BorrowBookPage() {
     try {
       await borrowBook(payload).unwrap();
       alert("Book borrowed successfully");
-      navigate("/"); // TODO: change the navigation route to borrow summary
+      navigate("/borrow-summary");
     } catch (error) {
       alert("Failed to borrow book");
       console.log(error)

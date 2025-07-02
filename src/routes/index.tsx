@@ -2,6 +2,7 @@ import MainLayout from "@/layout/MainLayout/MainLayout";
 import AddNewBookPage from "@/pages/AddNewBookPage";
 import BookListPage from "@/pages/BookListPage";
 import BorrowBookPage from "@/pages/BorrowBookPage";
+import BorrowSummaryPage from "@/pages/BorrowSummaryPage";
 
 import { createBrowserRouter } from "react-router";
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: "/borrow/:bookId",
         element: <BorrowBookPage />,
+      },
+      {
+        path: "/borrow-summary",
+        element: <BorrowSummaryPage />,
       },
     ],
   },

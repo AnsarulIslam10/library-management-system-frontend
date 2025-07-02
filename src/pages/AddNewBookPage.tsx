@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useCreateBookMutation } from "@/redux/api/libraryApi";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 type BookFormInputs = {
   title: string;
   author: string;
@@ -41,7 +42,7 @@ export default function AddNewBookPage() {
     try {
       await createBook(payload).unwrap();
       form.reset();
-      alert("Book added successfully");
+      toast("Book added successfully");
       navigate('/books')
     } catch (error) {
         console.log(error)

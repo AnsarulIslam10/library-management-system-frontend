@@ -13,15 +13,30 @@ import {
 } from "@/redux/api/libraryApi";
 import { Book, Pen, Trash2 } from "lucide-react";
 import { Link, useNavigate } from "react-router";
-
+import Swal from "sweetalert2";
 export default function BookListPage() {
   const { data: books, error, isLoading } = useGetBooksQuery({});
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookMutation();
   const navigate = useNavigate();
-console.log(books)
+  console.log(books);
   const handleDelete = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete this book")) {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
       await deleteBook(id);
+      Swal.fire({
+        title: "Deleted!",
+        text: "The book has been deleted.",
+        icon: "success",
+      });
     }
   };
 

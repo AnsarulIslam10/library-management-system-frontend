@@ -22,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useNavigate, useParams } from "react-router";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 interface EditBookFormValues {
   title: string;
@@ -79,7 +80,7 @@ export default function EditBookPage() {
         },
       }).unwrap();
 
-      alert("Book updated successfully");
+      toast("Book updated successfully");
       navigate("/books");
     } catch (error) {
       console.error("Update failed:", error);

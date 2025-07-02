@@ -15,6 +15,7 @@ import { format } from "date-fns";
 
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
+import { toast } from "react-toastify";
 type BorrowFormInputs = {
   quantity: number;
   dueDate: string;
@@ -41,10 +42,10 @@ export default function BorrowBookPage() {
 
     try {
       await borrowBook(payload).unwrap();
-      alert("Book borrowed successfully");
+      toast("Book borrowed successfully");
       navigate("/borrow-summary");
     } catch (error) {
-      alert("Failed to borrow book");
+      toast("Failed to borrow book");
       console.log(error)
     }
   };

@@ -8,7 +8,7 @@ export default function Navbar() {
       </div>
       <div className="flex gap-4">
         <NavLink
-          to="/books"
+          to="/"
           className={({ isActive }) =>
             isActive ? "underline font-bold" : "hover:underline"
           }

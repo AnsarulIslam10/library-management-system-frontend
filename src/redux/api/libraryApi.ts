@@ -25,8 +25,16 @@ export const libraryApi = createApi({
             }),
             transformResponse: (response: { success: boolean; message: string; data: Book[] }) => response.data,
             providesTags: ['Books']
+        }),
+        createBook: builder.mutation<Book, Partial<Book>>({
+            query: (body)=>({
+                url: 'books',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Books'],
         })
     })
 })
 
-export const { useGetBooksQuery } = libraryApi;
+export const { useGetBooksQuery, useCreateBookMutation } = libraryApi;

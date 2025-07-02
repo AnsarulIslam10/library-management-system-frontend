@@ -15,7 +15,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useCreateBookMutation } from "@/redux/api/libraryApi";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router";
 type BookFormInputs = {
   title: string;
   author: string;
@@ -27,18 +29,29 @@ type BookFormInputs = {
 };
 export default function AddNewBookPage() {
   const form = useForm<BookFormInputs>();
+  const [createBook, { isLoading }] = useCreateBookMutation();
+  const navigate = useNavigate();
   const onSubmit: SubmitHandler<BookFormInputs> = async (data) => {
     const payload = {
       ...data,
       copies: Number(data.copies),
       available: data.available === "true",
     };
-
+    try {
+      await createBook(payload).unwrap();
+      form.reset();
+      alert("Book added successfully");
+      navigate('/books')
+    } catch (error) {
+        console.log(error)
+    }
     form.reset();
   };
   return (
     <div className="max-w-3xl mx-auto shadow-xl p-4 rounded-xl mt-16">
-        <h2 className="text-3xl font-semibold text-center mb-4 underline">Add New Book</h2>
+      <h2 className="text-3xl font-semibold text-center mb-4 underline">
+        Add New Book
+      </h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
           <div className="">
@@ -164,8 +177,8 @@ export default function AddNewBookPage() {
               )}
             />
           </div>
-          <Button type="submit" className="w-full">
-            Add Book
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading? 'Adding...': 'Add Book'}
           </Button>
         </form>
       </Form>

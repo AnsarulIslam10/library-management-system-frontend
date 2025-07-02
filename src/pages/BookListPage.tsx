@@ -11,7 +11,7 @@ import {
   useDeleteBookMutation,
   useGetBooksQuery,
 } from "@/redux/api/libraryApi";
-import { Pen, Trash2 } from "lucide-react";
+import { Book, Pen, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
 
 export default function BookListPage() {
@@ -45,7 +45,7 @@ export default function BookListPage() {
             <TableHead>ISBN</TableHead>
             <TableHead>Copies</TableHead>
             <TableHead>Availability</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="text-center">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -59,12 +59,23 @@ export default function BookListPage() {
               <TableCell>
                 {book.available ? "Available" : "Unavailable"}
               </TableCell>
-              <TableCell className="flex items-center gap-2">
+              <TableCell className="flex items-center gap-2 justify-around">
                 <Pen
                   onClick={() => navigate(`/edit-book/${book._id}`)}
                   className="cursor-pointer"
                 />
-                <Button variant={"ghost"} onClick={()=> handleDelete(book._id)} disabled={isDeleting}>
+                <Button
+                  variant={"ghost"}
+                  className="cursor-pointer"
+                  onClick={() => navigate(`/borrow/${book._id}`)}
+                >
+                  <Book />
+                </Button>
+                <Button
+                  variant={"ghost"}
+                  onClick={() => handleDelete(book._id)}
+                  disabled={isDeleting}
+                >
                   <Trash2 className="cursor-pointer text-red-500" />
                 </Button>
               </TableCell>

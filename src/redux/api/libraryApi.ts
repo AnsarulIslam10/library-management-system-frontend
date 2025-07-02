@@ -9,14 +9,18 @@ export interface Book {
     description: string;
     copies: number;
     available: boolean;
-    createdAt: string;
-    updatedAt: string;
+}
+export interface Borrow {
+    _id: string;
+    book: string;
+    quantity: number;
+    dueDate: string;
 }
 
 export const libraryApi = createApi({
     reducerPath: 'libraryApi',
     baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
-    tagTypes: ['Books'],
+    tagTypes: ['Books', 'Borrows'],
     endpoints: (builder) => ({
         getBooks: builder.query<Book[], { filter?: string; sortBy?: string; sort?: string; limit?: number }>({
             query: (params) => ({
@@ -25,6 +29,11 @@ export const libraryApi = createApi({
             }),
             transformResponse: (response: { success: boolean; message: string; data: Book[] }) => response.data,
             providesTags: ['Books']
+        }),
+        getBookById: builder.query<Book, string>({
+            query: (bookId) => `books/${bookId}`,
+            transformResponse: (response: { success: boolean; message: string; data: Book }) => response.data,
+            providesTags: ['Books'],
         }),
         createBook: builder.mutation<Book, Partial<Book>>({
             query: (body) => ({
@@ -40,8 +49,16 @@ export const libraryApi = createApi({
                 method: 'DELETE',
             }),
             invalidatesTags: ['Books']
+        }),
+        borrowBook: builder.mutation<Borrow, { book: string; quantity: number; dueDate: string }>({
+            query: (body) => ({
+                url: 'borrow',
+                method: 'POST',
+                body
+            }),
+            invalidatesTags: ['Borrows', 'Books']
         })
     })
 })
 
-export const { useGetBooksQuery, useCreateBookMutation, useDeleteBookMutation } = libraryApi;
+export const { useGetBooksQuery, useCreateBookMutation, useDeleteBookMutation, useBorrowBookMutation, useGetBookByIdQuery } = libraryApi;

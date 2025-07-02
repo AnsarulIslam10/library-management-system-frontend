@@ -12,7 +12,7 @@ import {
   useGetBooksQuery,
 } from "@/redux/api/libraryApi";
 import { Book, Pen, Trash2 } from "lucide-react";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 export default function BookListPage() {
   const { data: books, error, isLoading } = useGetBooksQuery({});
@@ -51,7 +51,9 @@ export default function BookListPage() {
         <TableBody>
           {books?.map((book) => (
             <TableRow key={book._id}>
-              <TableCell className="font-medium">{book.title}</TableCell>
+              <Link to={`/book/${book._id}`}>
+                <TableCell className="font-medium">{book.title}</TableCell>
+              </Link>
               <TableCell>{book.author}</TableCell>
               <TableCell>{book.genre}</TableCell>
               <TableCell>{book.isbn}</TableCell>

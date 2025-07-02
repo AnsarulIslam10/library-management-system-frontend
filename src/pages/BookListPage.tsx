@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -6,13 +7,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useGetBooksQuery } from "@/redux/api/libraryApi";
+import {
+  useDeleteBookMutation,
+  useGetBooksQuery,
+} from "@/redux/api/libraryApi";
 import { Pen, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router";
 
 export default function BookListPage() {
   const { data: books, error, isLoading } = useGetBooksQuery({});
-  const navigate = useNavigate()
+  const [deleteBook, { isLoading: isDeleting }] = useDeleteBookMutation();
+  const navigate = useNavigate();
+
+  const handleDelete = async (id: string) => {
+    if (window.confirm("Are you sure you want to delete this book")) {
+      await deleteBook(id);
+    }
+  };
 
   if (isLoading) {
     return <p>Loading.........</p>;
@@ -22,7 +33,9 @@ export default function BookListPage() {
   }
   return (
     <div>
-      <h1 className="text-center text-3xl font-semibold underline mb-5">Books List</h1>
+      <h1 className="text-center text-3xl font-semibold underline mb-5">
+        Books List
+      </h1>
       <Table>
         <TableHeader>
           <TableRow>
@@ -43,10 +56,17 @@ export default function BookListPage() {
               <TableCell>{book.genre}</TableCell>
               <TableCell>{book.isbn}</TableCell>
               <TableCell>{book.copies}</TableCell>
-              <TableCell>{book.available ? 'Available' : 'Unavailable'}</TableCell>
+              <TableCell>
+                {book.available ? "Available" : "Unavailable"}
+              </TableCell>
               <TableCell className="flex items-center gap-2">
-                <Pen onClick={()=> navigate(`/edit-book/${book._id}`)} className="cursor-pointer" />
-                <Trash2 className="cursor-pointer text-red-500" />
+                <Pen
+                  onClick={() => navigate(`/edit-book/${book._id}`)}
+                  className="cursor-pointer"
+                />
+                <Button variant={"ghost"} onClick={()=> handleDelete(book._id)} disabled={isDeleting}>
+                  <Trash2 className="cursor-pointer text-red-500" />
+                </Button>
               </TableCell>
             </TableRow>
           ))}

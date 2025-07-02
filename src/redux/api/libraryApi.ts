@@ -27,14 +27,21 @@ export const libraryApi = createApi({
             providesTags: ['Books']
         }),
         createBook: builder.mutation<Book, Partial<Book>>({
-            query: (body)=>({
+            query: (body) => ({
                 url: 'books',
                 method: 'POST',
                 body,
             }),
             invalidatesTags: ['Books'],
+        }),
+        deleteBook: builder.mutation<{ success: boolean; message: string }, string>({
+            query: (id) => ({
+                url: `books/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Books']
         })
     })
 })
 
-export const { useGetBooksQuery, useCreateBookMutation } = libraryApi;
+export const { useGetBooksQuery, useCreateBookMutation, useDeleteBookMutation } = libraryApi;

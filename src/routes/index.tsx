@@ -4,6 +4,7 @@ import BookDetailsPage from "@/pages/BookDetailsPage";
 import BookListPage from "@/pages/BookListPage";
 import BorrowBookPage from "@/pages/BorrowBookPage";
 import BorrowSummaryPage from "@/pages/BorrowSummaryPage";
+import HomePage from "@/pages/HomePage";
 
 import { createBrowserRouter } from "react-router";
 
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <BookListPage />,
+        element: <HomePage/>,
       },
       {
         path: "/books",

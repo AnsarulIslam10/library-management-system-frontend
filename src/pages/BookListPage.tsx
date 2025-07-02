@@ -18,7 +18,7 @@ export default function BookListPage() {
   const { data: books, error, isLoading } = useGetBooksQuery({});
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookMutation();
   const navigate = useNavigate();
-
+console.log(books)
   const handleDelete = async (id: string) => {
     if (window.confirm("Are you sure you want to delete this book")) {
       await deleteBook(id);

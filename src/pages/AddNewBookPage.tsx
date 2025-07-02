@@ -21,6 +21,7 @@ import { useNavigate } from "react-router";
 type BookFormInputs = {
   title: string;
   author: string;
+  image: string,
   genre: string;
   isbn: string;
   description: string;
@@ -164,6 +165,18 @@ export default function AddNewBookPage() {
                 )}
               />
             </div>
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Image</FormLabel>
+                  <FormControl>
+                    <Input type="url" {...field} placeholder="Enter book image url" />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="description"

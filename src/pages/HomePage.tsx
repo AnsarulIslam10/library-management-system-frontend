@@ -1,3 +1,4 @@
+import Carousel from "@/components/Carousel/Carousel";
 import Loader from "@/components/Loader/Loader";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +27,7 @@ export default function HomePage() {
   
   return (
     <div className="px-4 md:px-10 lg:px-20 py-8">
+      <Carousel />
       <h1 className="text-center text-4xl font-bold text-gray-800 mb-10">
         Library Books
       </h1>

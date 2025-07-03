@@ -52,7 +52,7 @@ export default function HomePage() {
   return (
     <div className="">
       <Carousel />
-      <h1 className="text-center text-4xl font-bold text-gray-800 mb-10 mt-16">
+      <h1 className="text-5xl font-bold text-center text-cyan-500 mb-10 mt-16">
         Library Books
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -124,7 +124,7 @@ export default function HomePage() {
                       : "bg-red-100 text-red-800"
                   }`}
                 >
-                  {book.available ? "Available" : "Checked Out"}
+                  {book.available ? "Available" : "Unavailable"}
                 </span>
               </div>
 

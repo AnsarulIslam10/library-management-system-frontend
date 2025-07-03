@@ -8,17 +8,17 @@ const Carousel = () => {
     {
       id: 1,
       content: "Carousel 2 - Slide 1 Content",
-      imgSrc: "/src/assets/orv.png",
+      imgSrc: "https://i.ibb.co/Lh6fP8k9/got.jpg",
     },
     {
       id: 2,
       content: "Carousel 2 - Slide 2 Content",
-      imgSrc: "/src/assets/solo.jpeg",
+      imgSrc: "https://i.ibb.co/7dK2WTcX/orv.png",
     },
     {
       id: 3,
       content: "Carousel 2 - Slide 3 Content",
-      imgSrc: "/src/assets/orv.png",
+      imgSrc: "https://i.ibb.co/1Y8KBNDg/fantasy-book.jpg",
     },
   ];
 
@@ -39,7 +39,7 @@ const Carousel = () => {
   };
 
   return (
-    <div className="relative flex items-center justify-center h-[30vh] sm:h-[60vh] md:h-[70vh] w-full rounded-lg overflow-hidden">
+    <div className="relative flex items-center justify-center h-[30vh] sm:h-[60vh] md:h-[70vh] w-full overflow-hidden">
       <ArrowLeft
         className="absolute left-5 text-secondary text-[1.8rem] cursor-pointer z-10"
         onClick={prevSlide}

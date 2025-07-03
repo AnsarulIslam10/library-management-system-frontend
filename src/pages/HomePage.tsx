@@ -6,7 +6,7 @@ import {
   PaginationContent,
   PaginationItem,
   PaginationNext,
-  PaginationPrevious
+  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useGetBooksQuery } from "@/redux/api/libraryApi";
 import { useState } from "react";
@@ -24,7 +24,7 @@ export default function HomePage() {
     return <p>Error Loading books......</p>;
   }
   const { books, pagination } = data || { books: [], pagination: null };
-  
+
   return (
     <div className="px-4 md:px-10 lg:px-20 py-8">
       <Carousel />
@@ -35,38 +35,45 @@ export default function HomePage() {
         {books?.map((book) => (
           <div
             key={book._id}
-            className="bg-white shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl transition duration-300"
+            className="bg-white  overflow-hidden hover:shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 border border-gray-100"
           >
-            <img
-              src={book.image}
-              alt={book.title}
-              className="w-full h-80 object-cover"
-            />
-            <div className="p-4 flex flex-col justify-between h-56">
+            <div className="relative">
+              <img
+                src={book.image}
+                alt={book.title}
+                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+              />
+              <span className="absolute top-3 right-3 text-xs font-semibold text-white bg-cyan-600/90 px-2.5 py-1 rounded-full backdrop-blur-sm">
+                {book.genre}
+              </span>
+            </div>
+
+            <div className="p-5 flex flex-col gap-3">
               <div>
-                <h2 className="text-lg font-semibold text-gray-900 mb-1">
+                <h2 className="text-lg font-bold text-gray-900 line-clamp-1">
                   {book.title}
                 </h2>
-                <p className="text-sm text-gray-600 mb-1">by {book.author}</p>
-                <p className="text-xs text-white inline-block bg-blue-600 px-2 py-0.5 rounded">
-                  {book.genre}
-                </p>
+                <p className="text-sm text-gray-600">by {book.author}</p>
               </div>
-              <div className="mt-4">
-                <p
-                  className={`text-sm mb-2 ${
-                    book.available ? "text-green-600" : "text-red-500"
+
+              <div className="mt-2 flex items-center justify-between">
+                <span
+                  className={`text-sm font-medium px-2.5 py-1 rounded-full ${
+                    book.available
+                      ? "bg-green-100 text-green-800"
+                      : "bg-red-100 text-red-800"
                   }`}
                 >
-                  {book.available ? "Available" : "Not Available"}
-                </p>
-                <Button
-                  onClick={() => navigate(`/book/${book._id}`)}
-                  className="w-full py-2 px-4 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition cursor-pointer"
-                >
-                  View Details
-                </Button>
+                  {book.available ? "Available" : "Unavailable"}
+                </span>
               </div>
+
+              <Button
+                onClick={() => navigate(`/book/${book._id}`)}
+                className="mt-4 w-full py-2 px-4 text-sm font-medium text-white bg-gradient-to-r from-cyan-600 to-cyan-500 hover:from-cyan-700 hover:to-cyan-600 transition-all duration-200 shadow-sm hover:shadow-md active:scale-95 rounded-none cursor-pointer"
+              >
+                View Details
+              </Button>
             </div>
           </div>
         ))}

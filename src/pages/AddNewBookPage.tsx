@@ -22,7 +22,7 @@ import { toast } from "react-toastify";
 type BookFormInputs = {
   title: string;
   author: string;
-  image: string,
+  image: string;
   genre: string;
   isbn: string;
   description: string;
@@ -42,12 +42,22 @@ export default function AddNewBookPage() {
     try {
       await createBook(payload).unwrap();
       form.reset();
-      toast("Book added successfully");
-      navigate('/books')
+      toast.success("Book added successfully");
+      navigate("/books");
     } catch (error) {
-        console.log(error)
+      toast.error("Faild to add book");
     }
     form.reset();
+  };
+  const onError = (errors: Record<string, any>) => {
+    const firstError = Object.values(errors)[0];
+    if (
+      firstError &&
+      typeof firstError === "object" &&
+      "message" in firstError
+    ) {
+      toast.error(firstError.message);
+    }
   };
   return (
     <div className="max-w-3xl mx-auto shadow-xl p-4 rounded-xl mt-16">
@@ -55,12 +65,18 @@ export default function AddNewBookPage() {
         Add New Book
       </h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <form
+          onSubmit={form.handleSubmit(onSubmit, onError)}
+          className="space-y-3"
+        >
           <div className="">
             <div className="grid sm:grid-cols-2 gap-3 mb-4">
               <FormField
                 control={form.control}
                 name="title"
+                rules={{
+                  required: "Enter Book Title",
+                }}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Title</FormLabel>
@@ -73,6 +89,9 @@ export default function AddNewBookPage() {
               <FormField
                 control={form.control}
                 name="author"
+                rules={{
+                  required: "Enter Auther Name",
+                }}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Author</FormLabel>
@@ -87,6 +106,9 @@ export default function AddNewBookPage() {
               <FormField
                 control={form.control}
                 name="genre"
+                rules={{
+                  required: "Must Select a Genre",
+                }}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Genre</FormLabel>
@@ -114,6 +136,9 @@ export default function AddNewBookPage() {
               <FormField
                 control={form.control}
                 name="isbn"
+                rules={{
+                  required: "Enter ISBN",
+                }}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>ISBN</FormLabel>
@@ -128,6 +153,10 @@ export default function AddNewBookPage() {
               <FormField
                 control={form.control}
                 name="copies"
+                rules={{
+                  required: "Copies is required",
+                  min: { value: 1, message: "Copies must be at least 1" },
+                }}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Copies</FormLabel>
@@ -135,7 +164,6 @@ export default function AddNewBookPage() {
                       <Input
                         {...field}
                         type="number"
-                        min={0}
                         placeholder="Number of copies"
                       />
                     </FormControl>
@@ -145,6 +173,9 @@ export default function AddNewBookPage() {
               <FormField
                 control={form.control}
                 name="available"
+                rules={{
+                  required: "Select Availability",
+                }}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Availability</FormLabel>
@@ -169,11 +200,18 @@ export default function AddNewBookPage() {
             <FormField
               control={form.control}
               name="image"
+              rules={{
+                required: "Enter Book Image URL",
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Image</FormLabel>
                   <FormControl>
-                    <Input type="url" {...field} placeholder="Enter book image url" />
+                    <Input
+                      type="url"
+                      {...field}
+                      placeholder="Enter book image url"
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -181,6 +219,9 @@ export default function AddNewBookPage() {
             <FormField
               control={form.control}
               name="description"
+              rules={{
+                required: "Write Book's Description",
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
@@ -192,7 +233,7 @@ export default function AddNewBookPage() {
             />
           </div>
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading? 'Adding...': 'Add Book'}
+            {isLoading ? "Adding..." : "Add Book"}
           </Button>
         </form>
       </Form>

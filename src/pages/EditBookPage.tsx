@@ -81,10 +81,21 @@ export default function EditBookPage() {
         },
       }).unwrap();
 
-      toast("Book updated successfully");
+      toast.success("Book updated successfully");
       navigate("/books");
     } catch (error) {
       console.error("Update failed:", error);
+    }
+  };
+
+  const onError = (errors: Record<string, any>) => {
+    const firstError = Object.values(errors)[0];
+    if (
+      firstError &&
+      typeof firstError === "object" &&
+      "message" in firstError
+    ) {
+      toast.error(firstError.message);
     }
   };
 
@@ -97,11 +108,17 @@ export default function EditBookPage() {
         Edit Book
       </h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <form
+          onSubmit={form.handleSubmit(onSubmit, onError)}
+          className="space-y-3"
+        >
           <div className="grid sm:grid-cols-2 gap-3 mb-4">
             <FormField
               control={form.control}
               name="title"
+              rules={{
+                required: "Enter Book Title",
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Title</FormLabel>
@@ -114,6 +131,9 @@ export default function EditBookPage() {
             <FormField
               control={form.control}
               name="author"
+              rules={{
+                required: "Enter Auther Name",
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Author</FormLabel>
@@ -128,6 +148,9 @@ export default function EditBookPage() {
             <FormField
               control={form.control}
               name="genre"
+              rules={{
+                required: "Must Select a Genre",
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Genre</FormLabel>
@@ -152,6 +175,9 @@ export default function EditBookPage() {
             <FormField
               control={form.control}
               name="isbn"
+              rules={{
+                required: "Enter ISBN",
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>ISBN</FormLabel>
@@ -166,6 +192,10 @@ export default function EditBookPage() {
             <FormField
               control={form.control}
               name="copies"
+              rules={{
+                required: "Copies is required",
+                min: { value: 1, message: "Copies must be at least 1" },
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Copies</FormLabel>
@@ -173,7 +203,6 @@ export default function EditBookPage() {
                     <Input
                       {...field}
                       type="number"
-                      min={0}
                       placeholder="Number of copies"
                     />
                   </FormControl>
@@ -183,6 +212,9 @@ export default function EditBookPage() {
             <FormField
               control={form.control}
               name="available"
+              rules={{
+                required: "Select Availability",
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Availability</FormLabel>
@@ -204,6 +236,9 @@ export default function EditBookPage() {
           <FormField
             control={form.control}
             name="image"
+            rules={{
+              required: "Enter Book Image URL",
+            }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Image</FormLabel>
@@ -220,6 +255,9 @@ export default function EditBookPage() {
           <FormField
             control={form.control}
             name="description"
+            rules={{
+              required: "Write Book's Description",
+            }}
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Description</FormLabel>

@@ -50,6 +50,16 @@ export default function BorrowBookPage() {
       console.log(error)
     }
   };
+  const onError = (errors: Record<string, any>) => {
+    const firstError = Object.values(errors)[0];
+    if (
+      firstError &&
+      typeof firstError === "object" &&
+      "message" in firstError
+    ) {
+      toast.error(firstError.message);
+    }
+  };
   return (
     <div className="max-w-xl mx-auto mt-8 p-4 border shadow rounded">
       <h2 className="text-xl font-bold mb-4">Borrow Book</h2>
@@ -70,7 +80,7 @@ export default function BorrowBookPage() {
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="quantity"

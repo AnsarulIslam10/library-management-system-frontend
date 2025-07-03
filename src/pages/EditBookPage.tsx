@@ -21,7 +21,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useNavigate, useParams } from "react-router";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "@/components/Loader/Loader";
 
@@ -41,6 +41,7 @@ export default function EditBookPage() {
   const { data: bookData, isLoading, error } = useGetBookByIdQuery(id!);
   const [updateBook, { isLoading: isUpdating }] = useUpdateBookMutation();
   const navigate = useNavigate();
+  const [isFormReady, setIsFormReady] = useState(false);
 
   const form = useForm<EditBookFormValues>({
     defaultValues: {
@@ -67,6 +68,7 @@ export default function EditBookPage() {
         description: bookData.description,
         image: bookData.image || "",
       });
+      setIsFormReady(true);
     }
   }, [bookData, form]);
 
@@ -107,171 +109,173 @@ export default function EditBookPage() {
       <h2 className="text-3xl font-bold text-center mb-4 text-cyan-500">
         Edit Book
       </h2>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit, onError)}
-          className="space-y-3"
-        >
-          <div className="grid sm:grid-cols-2 gap-3 mb-4">
-            <FormField
-              control={form.control}
-              name="title"
-              rules={{
-                required: "Enter Book Title",
-              }}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Enter book title" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="author"
-              rules={{
-                required: "Enter Auther Name",
-              }}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Author</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Enter author name" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid sm:grid-cols-2 gap-3 mb-4">
-            <FormField
-              control={form.control}
-              name="genre"
-              rules={{
-                required: "Must Select a Genre",
-              }}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Genre</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl className="w-full">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a genre" />
-                      </SelectTrigger>
+
+      {isFormReady ? (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit, onError)}
+            className="space-y-3"
+          >
+            <div className="grid sm:grid-cols-2 gap-3 mb-4">
+              <FormField
+                control={form.control}
+                name="title"
+                rules={{ required: "Enter Book Title" }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Enter book title" />
                     </FormControl>
-                    <SelectContent>
-                      <SelectItem value="FICTION">FICTION</SelectItem>
-                      <SelectItem value="NON_FICTION">NON_FICTION</SelectItem>
-                      <SelectItem value="SCIENCE">SCIENCE</SelectItem>
-                      <SelectItem value="HISTORY">HISTORY</SelectItem>
-                      <SelectItem value="BIOGRAPHY">BIOGRAPHY</SelectItem>
-                      <SelectItem value="FANTASY">FANTASY</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </FormItem>
-              )}
-            />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="author"
+                rules={{ required: "Enter Author Name" }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Author</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Enter author name" />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-3 mb-4">
+              <FormField
+                control={form.control}
+                name="genre"
+                rules={{ required: "Must Select a Genre" }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Genre</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl className="w-full">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a genre" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="FICTION">FICTION</SelectItem>
+                        <SelectItem value="NON_FICTION">NON_FICTION</SelectItem>
+                        <SelectItem value="SCIENCE">SCIENCE</SelectItem>
+                        <SelectItem value="HISTORY">HISTORY</SelectItem>
+                        <SelectItem value="BIOGRAPHY">BIOGRAPHY</SelectItem>
+                        <SelectItem value="FANTASY">FANTASY</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="isbn"
+                rules={{ required: "Enter ISBN" }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>ISBN</FormLabel>
+                    <FormControl>
+                      <Input {...field} placeholder="Enter ISBN number" />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-3 mb-4">
+              <FormField
+                control={form.control}
+                name="copies"
+                rules={{
+                  required: "Copies is required",
+                  min: { value: 1, message: "Copies must be at least 1" },
+                }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Copies</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="number"
+                        placeholder="Number of copies"
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="available"
+                rules={{ required: "Select Availability" }}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Availability</FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl className="w-full">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select availability" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="true">Available</SelectItem>
+                        <SelectItem value="false">Unavailable</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
-              name="isbn"
-              rules={{
-                required: "Enter ISBN",
-              }}
+              name="image"
+              rules={{ required: "Enter Book Image URL" }}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>ISBN</FormLabel>
-                  <FormControl>
-                    <Input {...field} placeholder="Enter ISBN number" />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-          <div className="grid sm:grid-cols-2 gap-3 mb-4">
-            <FormField
-              control={form.control}
-              name="copies"
-              rules={{
-                required: "Copies is required",
-                min: { value: 1, message: "Copies must be at least 1" },
-              }}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Copies</FormLabel>
+                  <FormLabel>Image</FormLabel>
                   <FormControl>
                     <Input
+                      type="url"
                       {...field}
-                      type="number"
-                      placeholder="Number of copies"
+                      placeholder="Enter book image url"
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
-              name="available"
-              rules={{
-                required: "Select Availability",
-              }}
+              name="description"
+              rules={{ required: "Write Book's Description" }}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Availability</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl className="w-full">
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select availability" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="true">Available</SelectItem>
-                      <SelectItem value="false">Unavailable</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Textarea {...field} placeholder="Write description" />
+                  </FormControl>
                 </FormItem>
               )}
             />
-          </div>
-          <FormField
-            control={form.control}
-            name="image"
-            rules={{
-              required: "Enter Book Image URL",
-            }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Image</FormLabel>
-                <FormControl>
-                  <Input
-                    type="url"
-                    {...field}
-                    placeholder="Enter book image url"
-                  />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="description"
-            rules={{
-              required: "Write Book's Description",
-            }}
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Textarea {...field} placeholder="Write description" />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="w-full bg-cyan-500 hover:bg-cyan-600" disabled={isUpdating}>
-            {isUpdating ? "Updating..." : "Update Book"}
-          </Button>
-        </form>
-      </Form>
+
+            <Button
+              type="submit"
+              className="w-full bg-cyan-500 hover:bg-cyan-600"
+              disabled={isUpdating}
+            >
+              {isUpdating ? "Updating..." : "Update Book"}
+            </Button>
+          </form>
+        </Form>
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 }

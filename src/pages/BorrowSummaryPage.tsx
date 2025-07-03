@@ -11,7 +11,7 @@ import { useGetBorrowSummaryQuery } from "@/redux/api/libraryApi";
 
 export default function BorrowSummaryPage() {
   const { data: summary, isLoading, isError } = useGetBorrowSummaryQuery();
-  console.log(summary)
+  console.log(summary);
   if (isLoading) {
     return <Loader />;
   }
@@ -25,7 +25,8 @@ export default function BorrowSummaryPage() {
       </h2>
       <Table>
         <TableHeader>
-          <TableRow>
+          <TableRow className="bg-cyan-300 hover:bg-cyan-400">
+            <TableHead>No.</TableHead>
             <TableHead>Title</TableHead>
             <TableHead>ISBN</TableHead>
             <TableHead>Total Borrowed</TableHead>
@@ -34,6 +35,7 @@ export default function BorrowSummaryPage() {
         <TableBody>
           {summary?.map((item, idx) => (
             <TableRow key={idx}>
+              <TableCell>{idx + 1}</TableCell>
               <TableCell>{item.book.title}</TableCell>
               <TableCell>{item.book.isbn}</TableCell>
               <TableCell>{item.totalQuantity}</TableCell>

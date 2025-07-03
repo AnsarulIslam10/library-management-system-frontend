@@ -1,6 +1,5 @@
 import Carousel from "@/components/Carousel/Carousel";
 import Loader from "@/components/Loader/Loader";
-import { Button } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -12,7 +11,7 @@ import {
   useDeleteBookMutation,
   useGetBooksQuery,
 } from "@/redux/api/libraryApi";
-import { Book, BookOpen, Pen, Trash2 } from "lucide-react";
+import { BookOpen, Pen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import Swal from "sweetalert2";

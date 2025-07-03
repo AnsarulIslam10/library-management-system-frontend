@@ -1,6 +1,12 @@
 import Loader from "@/components/Loader/Loader";
 import { Button } from "@/components/ui/button";
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import {
   Table,
   TableBody,
@@ -13,7 +19,7 @@ import {
   useDeleteBookMutation,
   useGetBooksQuery,
 } from "@/redux/api/libraryApi";
-import { Book, Pen, Trash2 } from "lucide-react";
+import { BookOpen, Pen, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
@@ -54,13 +60,13 @@ export default function BookListPage() {
     return <p>Error Loading books......</p>;
   }
   return (
-    <div>
+    <div className="mt-10">
       <h1 className="text-center text-3xl font-semibold underline mb-5">
         Books List
       </h1>
       <Table>
         <TableHeader>
-          <TableRow className="bg-red-300 hover:bg-red-400">
+          <TableRow className="bg-cyan-300 hover:bg-cyan-400">
             <TableHead>No.</TableHead>
             <TableHead className="w-[100px]">Title</TableHead>
             <TableHead>Author</TableHead>
@@ -86,21 +92,28 @@ export default function BookListPage() {
                 {book.available ? "Available" : "Unavailable"}
               </TableCell>
               <TableCell className="flex items-center gap-2 justify-around">
-                <Pen
+                <Button
+                  variant={"ghost"}
                   onClick={() => navigate(`/edit-book/${book._id}`)}
                   className="cursor-pointer"
-                />
+                  title="Edit Book"
+                >
+                  <Pen />
+                </Button>
                 <Button
                   variant={"ghost"}
                   className="cursor-pointer"
                   onClick={() => navigate(`/borrow/${book._id}`)}
+                  disabled={!book.available}
+                  title="Borrow Book"
                 >
-                  <Book />
+                  <BookOpen />
                 </Button>
                 <Button
                   variant={"ghost"}
                   onClick={() => handleDelete(book._id)}
                   disabled={isDeleting}
+                  title="Delete"
                 >
                   <Trash2 className="cursor-pointer text-red-500" />
                 </Button>

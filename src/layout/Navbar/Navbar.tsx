@@ -1,7 +1,7 @@
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import { Link, NavLink } from "react-router";
-
+import logo from "./../../../public/book logo.png"
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -10,7 +10,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2 group">
-          <img className="w-16" src="/public/book logo.png" alt="" />
+          <img className="w-16" src={logo} alt="" />
           <span className="text-4xl font-bold text-cyan-500 transition-all duration-300">
             LMS
           </span>

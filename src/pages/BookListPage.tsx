@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader/Loader";
 import { Button } from "@/components/ui/button";
 import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import {
@@ -47,7 +48,7 @@ export default function BookListPage() {
   };
 
   if (isLoading) {
-    return <p>Loading.........</p>;
+    return <Loader />;
   }
   if (error) {
     return <p>Error Loading books......</p>;

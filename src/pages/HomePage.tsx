@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader/Loader";
 import { Button } from "@/components/ui/button";
 import {
   Pagination,
@@ -16,7 +17,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <p>Loading.........</p>;
+    return <Loader />;
   }
   if (error) {
     return <p>Error Loading books......</p>;

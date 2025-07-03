@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader/Loader";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -54,7 +55,7 @@ export default function BorrowBookPage() {
       <h2 className="text-xl font-bold mb-4">Borrow Book</h2>
 
       {bookLoading ? (
-        <p>Loading book details...</p>
+        <Loader />
       ) : !bookData ? (
         <p className="text-red-500">Book not found</p>
       ) : (

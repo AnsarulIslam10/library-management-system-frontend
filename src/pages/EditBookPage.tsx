@@ -23,6 +23,7 @@ import { useNavigate, useParams } from "react-router";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import Loader from "@/components/Loader/Loader";
 
 interface EditBookFormValues {
   title: string;
@@ -87,7 +88,7 @@ export default function EditBookPage() {
     }
   };
 
-  if (isLoading) return <p>Loading book data...</p>;
+  if (isLoading) return <Loader />;
   if (error || !bookData) return <p>Error loading book.</p>;
 
   return (

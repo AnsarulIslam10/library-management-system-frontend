@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader/Loader";
 import { useGetBookByIdQuery } from "@/redux/api/libraryApi";
 import { useParams } from "react-router";
 
@@ -6,7 +7,7 @@ export default function BookDetailsPage() {
   const { data: book, isLoading, isError } = useGetBookByIdQuery(bookId!);
 
   if (isLoading) {
-    return <p>Loading</p>;
+    return <Loader />;
   }
   if (isError) {
     return <p>Error</p>;

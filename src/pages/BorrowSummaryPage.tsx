@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader/Loader";
 import {
   Table,
   TableBody,
@@ -12,7 +13,7 @@ export default function BorrowSummaryPage() {
   const { data: summary, isLoading, isError } = useGetBorrowSummaryQuery();
   console.log(summary)
   if (isLoading) {
-    return <p>Loading......</p>;
+    return <Loader />;
   }
   if (isError) {
     return <p>Faild to load summary</p>;

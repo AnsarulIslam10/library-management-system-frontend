@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <nav className="flex items-center justify-between p-4 shadow-2xl">
       <div>
-        <Link to={"/"}>LMS</Link>
+        <Link to={"/"} className="text-3xl font-bold text-cyan-500">LMS</Link>
       </div>
       <div className="flex gap-4">
         <NavLink

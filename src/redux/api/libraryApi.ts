@@ -30,12 +30,38 @@ export const libraryApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
     tagTypes: ['Books', 'Borrows'],
     endpoints: (builder) => ({
-        getBooks: builder.query<Book[], { filter?: string; sortBy?: string; sort?: string; limit?: number }>({
+        getBooks: builder.query<{
+            books: Book[];
+            pagination: {
+                total: number;
+                totalPages: number;
+                currentPage: number;
+                limit: number;
+            };
+        }, {
+            filter?: string;
+            sortBy?: string;
+            sort?: string;
+            limit?: number;
+            page?: number;
+        }>({
             query: (params) => ({
                 url: 'books',
                 params,
             }),
-            transformResponse: (response: { success: boolean; message: string; data: Book[] }) => response.data,
+            transformResponse: (response: {
+                success: boolean;
+                message: string;
+                data: {
+                    books: Book[];
+                    pagination: {
+                        total: number;
+                        totalPages: number;
+                        currentPage: number;
+                        limit: number;
+                    };
+                }
+            }) => response.data,
             providesTags: ['Books']
         }),
         getBookById: builder.query<Book, string>({

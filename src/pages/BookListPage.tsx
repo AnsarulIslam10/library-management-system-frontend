@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import {
   Table,
   TableBody,
@@ -12,13 +13,18 @@ import {
   useGetBooksQuery,
 } from "@/redux/api/libraryApi";
 import { Book, Pen, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 export default function BookListPage() {
-  const { data: books, error, isLoading } = useGetBooksQuery({});
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const { data, error, isLoading } = useGetBooksQuery({ page, limit });
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookMutation();
   const navigate = useNavigate();
-  console.log(books);
+  const books = data?.books || [];
+  const pagination = data?.pagination || null;
+
   const handleDelete = async (id: string) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -53,7 +59,8 @@ export default function BookListPage() {
       </h1>
       <Table>
         <TableHeader>
-          <TableRow>
+          <TableRow className="bg-red-300 hover:bg-red-400">
+            <TableHead>No.</TableHead>
             <TableHead className="w-[100px]">Title</TableHead>
             <TableHead>Author</TableHead>
             <TableHead>Genre</TableHead>
@@ -64,8 +71,9 @@ export default function BookListPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {books?.map((book) => (
+          {books?.map((book, idx) => (
             <TableRow key={book._id}>
+              <TableCell>{idx + 1}</TableCell>
               <Link to={`/book/${book._id}`}>
                 <TableCell className="font-medium">{book.title}</TableCell>
               </Link>
@@ -100,6 +108,43 @@ export default function BookListPage() {
           ))}
         </TableBody>
       </Table>
+      {pagination && pagination.totalPages > 1 && (
+        <div className="mt-6 flex justify-center items-center space-x-4">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (page > 1) setPage(page - 1);
+                  }}
+                  className={page === 1 ? "pointer-events-none opacity-50" : ""}
+                />
+              </PaginationItem>
+
+              <span className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700">
+                Page {pagination.currentPage} of {pagination.totalPages}
+              </span>
+
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (page < pagination.totalPages) setPage(page + 1);
+                  }}
+                  className={
+                    page === pagination.totalPages
+                      ? "pointer-events-none opacity-50"
+                      : ""
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </div>
   );
 }

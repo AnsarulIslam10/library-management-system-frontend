@@ -1,11 +1,19 @@
 import { Button } from "@/components/ui/button";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious
+} from "@/components/ui/pagination";
 import { useGetBooksQuery } from "@/redux/api/libraryApi";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 
 export default function HomePage() {
-  const { data: books, error, isLoading } = useGetBooksQuery({});
+  const [page, setPage] = useState(1);
+  const { data, error, isLoading } = useGetBooksQuery({ page, limit: 8 });
   const navigate = useNavigate();
-  console.log(books);
 
   if (isLoading) {
     return <p>Loading.........</p>;
@@ -13,10 +21,12 @@ export default function HomePage() {
   if (error) {
     return <p>Error Loading books......</p>;
   }
+  const { books, pagination } = data || { books: [], pagination: null };
+  
   return (
     <div className="px-4 md:px-10 lg:px-20 py-8">
       <h1 className="text-center text-4xl font-bold text-gray-800 mb-10">
-        📚 Library Books
+        Library Books
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {books?.map((book) => (
@@ -58,6 +68,44 @@ export default function HomePage() {
           </div>
         ))}
       </div>
+      {pagination && pagination.totalPages > 1 && (
+        <div className="mt-10 flex justify-center items-center space-x-4">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (page > 1) setPage(page - 1);
+                  }}
+                  className={page === 1 ? "pointer-events-none opacity-50" : ""}
+                />
+              </PaginationItem>
+
+              {/* current page info */}
+              <span className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700">
+                Page {pagination.currentPage} of {pagination.totalPages}
+              </span>
+
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (page < pagination.totalPages) setPage(page + 1);
+                  }}
+                  className={
+                    page === pagination.totalPages
+                      ? "pointer-events-none opacity-50"
+                      : ""
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </div>
   );
 }

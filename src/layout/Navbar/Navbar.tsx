@@ -2,9 +2,9 @@ import { Link, NavLink } from "react-router";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between p-4">
+    <nav className="flex items-center justify-between p-4 shadow-2xl">
       <div>
-        <Link to={'/'}>LMS</Link>
+        <Link to={"/"}>LMS</Link>
       </div>
       <div className="flex gap-4">
         <NavLink

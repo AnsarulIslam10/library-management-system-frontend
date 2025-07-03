@@ -61,7 +61,7 @@ export default function AddNewBookPage() {
   };
   return (
     <div className="max-w-3xl mx-auto shadow-xl p-4 rounded-xl mt-16">
-      <h2 className="text-3xl font-semibold text-center mb-4 underline">
+      <h2 className="text-3xl font-bold text-center mb-4 text-cyan-500">
         Add New Book
       </h2>
       <Form {...form}>
@@ -224,7 +224,7 @@ export default function AddNewBookPage() {
               }}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel className="mt-4">Description</FormLabel>
                   <FormControl>
                     <Textarea {...field} placeholder="Write description" />
                   </FormControl>
@@ -232,7 +232,7 @@ export default function AddNewBookPage() {
               )}
             />
           </div>
-          <Button type="submit" className="w-full" disabled={isLoading}>
+          <Button type="submit" className="w-full bg-cyan-500" disabled={isLoading}>
             {isLoading ? "Adding..." : "Add Book"}
           </Button>
         </form>

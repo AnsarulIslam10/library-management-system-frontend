@@ -61,7 +61,7 @@ export default function BookListPage() {
   }
   return (
     <div className="mt-10">
-      <h1 className="text-center text-3xl font-semibold underline mb-5">
+      <h1 className="text-3xl font-bold text-center mb-4 text-cyan-500">
         Books List
       </h1>
       <Table>

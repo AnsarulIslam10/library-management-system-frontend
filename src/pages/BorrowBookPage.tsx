@@ -23,14 +23,14 @@ type BorrowFormInputs = {
 };
 export default function BorrowBookPage() {
   const { bookId } = useParams();
-  console.log(bookId)
+  console.log(bookId);
   const navigate = useNavigate();
   const form = useForm<BorrowFormInputs>();
 
   const { data: bookData, isLoading: bookLoading } = useGetBookByIdQuery(
     bookId!
   );
-  console.log(bookData)
+  console.log(bookData);
   const maxQuantity = bookData?.copies ?? 0;
   const [borrowBook, { isLoading: borrowLoading }] = useBorrowBookMutation();
 
@@ -47,7 +47,7 @@ export default function BorrowBookPage() {
       navigate("/borrow-summary");
     } catch (error) {
       toast("Failed to borrow book");
-      console.log(error)
+      console.log(error);
     }
   };
   const onError = (errors: Record<string, any>) => {
@@ -61,8 +61,10 @@ export default function BorrowBookPage() {
     }
   };
   return (
-    <div className="max-w-xl mx-auto mt-8 p-4 border shadow rounded">
-      <h2 className="text-xl font-bold mb-4">Borrow Book</h2>
+    <div className="max-w-xl mx-auto mt-16 p-4 shadow-md">
+      <h2 className="text-3xl font-bold text-center mb-4 text-cyan-500">
+        Borrow Book
+      </h2>
 
       {bookLoading ? (
         <Loader />
@@ -80,7 +82,10 @@ export default function BorrowBookPage() {
           </div>
 
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit, onError)} className="space-y-4">
+            <form
+              onSubmit={form.handleSubmit(onSubmit, onError)}
+              className="space-y-4"
+            >
               <FormField
                 control={form.control}
                 name="quantity"
@@ -124,9 +129,11 @@ export default function BorrowBookPage() {
                 )}
               />
 
-              <Button type="submit" disabled={borrowLoading}>
-                {borrowLoading ? "Borrowing..." : "Borrow Book"}
-              </Button>
+              <div className="flex justify-center items-center">
+                <Button className="bg-cyan-500 hover:bg-cyan-600 rounded-none w-full" type="submit" disabled={borrowLoading}>
+                  {borrowLoading ? "Borrowing..." : "Borrow Book"}
+                </Button>
+              </div>
             </form>
           </Form>
         </>

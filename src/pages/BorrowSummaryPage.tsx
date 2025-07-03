@@ -20,7 +20,7 @@ export default function BorrowSummaryPage() {
   }
   return (
     <div className="mt-10">
-      <h2 className="text-3xl font-semibold mb-4 text-center underline">
+      <h2 className="text-3xl font-bold text-center mb-4 text-cyan-500">
         Borrowed Books Summary
       </h2>
       <Table>

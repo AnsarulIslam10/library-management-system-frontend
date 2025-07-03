@@ -59,7 +59,7 @@ export default function HomePage() {
         {books?.map((book) => (
           <div
             key={book._id}
-            className="bg-white shadow-lg rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 border border-gray-100 relative group text-center"
+            className="bg-white shadow-lg  overflow-hidden hover:shadow-xl transition-all duration-300 ease-in-out hover:-translate-y-1 border border-gray-100 relative group text-center"
           >
             <div className="absolute top-3 left-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
               <button
@@ -171,7 +171,7 @@ export default function HomePage() {
               </span>
 
               <PaginationItem>
-                <PaginationNext
+                <PaginationNext 
                   href="#"
                   onClick={(e) => {
                     e.preventDefault();

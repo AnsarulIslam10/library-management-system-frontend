@@ -10,7 +10,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2 group">
-          <span className="text-3xl font-extrabold bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent group-hover:from-cyan-600 group-hover:to-blue-700 transition-all duration-300">
+          <img className="w-16" src="/src/assets/book logo.png" alt="" />
+          <span className="text-4xl font-bold text-cyan-500 transition-all duration-300">
             LMS
           </span>
         </Link>

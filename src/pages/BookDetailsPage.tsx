@@ -13,7 +13,7 @@ export default function BookDetailsPage() {
     return <p>Error</p>;
   }
   return (
-    <div className="max-w-6xl mx-auto my-10 p-6 border rounded shadow">
+    <div className="max-w-6xl mx-auto my-10 p-6 rounded ">
       <div className="space-y-2 text-lg md:flex gap-5">
         <div className="flex justify-center">
           <img src={book?.image} alt="" />

@@ -1,4 +1,4 @@
-import { BsGithub, BsLinkedin, BsTwitterX } from "react-icons/bs";
+import { BsGithub, BsLinkedin } from "react-icons/bs";
 import { CgFacebook, CgWebsite } from "react-icons/cg";
 import { Link } from "react-router";
 

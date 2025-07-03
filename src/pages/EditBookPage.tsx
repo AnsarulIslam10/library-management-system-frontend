@@ -104,7 +104,7 @@ export default function EditBookPage() {
 
   return (
     <div className="max-w-3xl mx-auto shadow-xl p-4 rounded-xl mt-16">
-      <h2 className="text-3xl font-semibold text-center mb-4 underline">
+      <h2 className="text-3xl font-bold text-center mb-4 text-cyan-500">
         Edit Book
       </h2>
       <Form {...form}>
@@ -155,7 +155,7 @@ export default function EditBookPage() {
                 <FormItem>
                   <FormLabel>Genre</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
+                    <FormControl className="w-full">
                       <SelectTrigger>
                         <SelectValue placeholder="Select a genre" />
                       </SelectTrigger>
@@ -219,7 +219,7 @@ export default function EditBookPage() {
                 <FormItem>
                   <FormLabel>Availability</FormLabel>
                   <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
+                    <FormControl className="w-full">
                       <SelectTrigger>
                         <SelectValue placeholder="Select availability" />
                       </SelectTrigger>
@@ -267,7 +267,7 @@ export default function EditBookPage() {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full" disabled={isUpdating}>
+          <Button type="submit" className="w-full bg-cyan-500 hover:bg-cyan-600" disabled={isUpdating}>
             {isUpdating ? "Updating..." : "Update Book"}
           </Button>
         </form>

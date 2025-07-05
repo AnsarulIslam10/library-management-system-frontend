@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
 
 export default function HomePage() {
   const [page, setPage] = useState(1);
-  const { data, error, isLoading } = useGetBooksQuery({ page, limit: 12 });
+  const { data, error, isLoading } = useGetBooksQuery({ page, limit: 6 });
   const navigate = useNavigate();
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookMutation();
   const handleDelete = async (id: string) => {
@@ -55,7 +55,7 @@ export default function HomePage() {
       <h1 className="text-5xl font-bold text-center text-cyan-500 mb-10 mt-16">
         Library Books
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-6">
         {books?.map((book) => (
           <div
             key={book._id}
@@ -101,7 +101,7 @@ export default function HomePage() {
               <img
                 src={book.image}
                 alt={book.title}
-                className="w-full h-72 object-cover hover:scale-105 transition-transform duration-300"
+                className="w-full h-[600px] object-cover hover:scale-105 transition-transform duration-300"
               />
               <span className="absolute top-3 right-3 text-xs font-semibold text-white bg-cyan-600/90 px-2.5 py-1 rounded-full backdrop-blur-sm">
                 {book.genre}

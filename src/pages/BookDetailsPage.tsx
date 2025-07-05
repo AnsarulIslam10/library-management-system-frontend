@@ -14,12 +14,12 @@ export default function BookDetailsPage() {
   }
   return (
     <div className="max-w-6xl mx-auto my-10 p-6 rounded ">
-      <div className="space-y-2 text-lg md:flex gap-5">
-        <div className="flex justify-center">
-          <img src={book?.image} alt="" />
+      <div className="flex flex-col md:flex-row gap-6">
+        <div className="w-full md:w-1/2 flex justify-center">
+          <img className="max-w-full h-auto" src={book?.image} alt="" />
         </div>
-        <div>
-          <h1 className="text-3xl font-bold mb-4 text-center">{book?.title}</h1>
+        <div className="w-full md:w-1/2">
+          <h1 className="text-3xl font-bold mb-4 text-center text-cyan-500">{book?.title}</h1>
           <p>
             <strong>Author:</strong> {book?.author}
           </p>

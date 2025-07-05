@@ -18,7 +18,7 @@ import Swal from "sweetalert2";
 
 export default function HomePage() {
   const [page, setPage] = useState(1);
-  const { data, error, isLoading } = useGetBooksQuery({ page, limit: 8 });
+  const { data, error, isLoading } = useGetBooksQuery({ page, limit: 12 });
   const navigate = useNavigate();
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookMutation();
   const handleDelete = async (id: string) => {

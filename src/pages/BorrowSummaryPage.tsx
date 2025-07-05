@@ -1,4 +1,5 @@
 import Loader from "@/components/Loader/Loader";
+import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import {
   Table,
   TableBody,
@@ -8,10 +9,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetBorrowSummaryQuery } from "@/redux/api/libraryApi";
+import { useState } from "react";
 
 export default function BorrowSummaryPage() {
-  const { data: summary, isLoading, isError } = useGetBorrowSummaryQuery();
-  console.log(summary);
+  const [page, setPage] = useState(1)
+  const limit = 10;
+
+  const { data, isLoading, isError } = useGetBorrowSummaryQuery({ page, limit});
+  
+  const borrows = data?.borrows || [];
+  const pagination = data?.pagination;
+
   if (isLoading) {
     return <Loader />;
   }
@@ -33,7 +41,7 @@ export default function BorrowSummaryPage() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {summary?.map((item, idx) => (
+          {borrows?.map((item, idx) => (
             <TableRow key={idx}>
               <TableCell>{idx + 1}</TableCell>
               <TableCell>{item.book.title}</TableCell>
@@ -43,6 +51,43 @@ export default function BorrowSummaryPage() {
           ))}
         </TableBody>
       </Table>
+      {pagination && pagination.totalPages > 1 && (
+        <div className="mt-6 flex justify-center items-center space-x-4">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (page > 1) setPage(page - 1);
+                  }}
+                  className={page === 1 ? "pointer-events-none opacity-50" : ""}
+                />
+              </PaginationItem>
+
+              <span className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700">
+                Page {pagination.currentPage} of {pagination.totalPages}
+              </span>
+
+              <PaginationItem>
+                <PaginationNext
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (page < pagination.totalPages) setPage(page + 1);
+                  }}
+                  className={
+                    page === pagination.totalPages
+                      ? "pointer-events-none opacity-50"
+                      : ""
+                  }
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </div>
   );
 }

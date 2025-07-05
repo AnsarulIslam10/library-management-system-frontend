@@ -81,9 +81,11 @@ export default function BookListPage() {
           {books?.map((book, idx) => (
             <TableRow key={book._id}>
               <TableCell>{idx + 1}</TableCell>
-              <Link to={`/book/${book._id}`}>
-                <TableCell className="font-medium">{book.title}</TableCell>
-              </Link>
+
+              <TableCell className="font-medium">
+                <Link to={`/book/${book._id}`}>{book.title}</Link>
+              </TableCell>
+
               <TableCell>{book.author}</TableCell>
               <TableCell>{book.genre}</TableCell>
               <TableCell>{book.isbn}</TableCell>

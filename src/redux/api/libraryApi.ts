@@ -101,17 +101,34 @@ export const libraryApi = createApi({
             invalidatesTags: ['Borrows', 'Books']
         }),
         getBorrowSummary: builder.query<
-            { book: { title: string; isbn: string }; totalQuantity: number }[],
-            void
+            {
+                borrows: { book: { title: string; isbn: string }; totalQuantity: number }[];
+                pagination: {
+                    total: number;
+                    totalPages: number;
+                    currentPage: number;
+                    limit: number;
+                };
+            },
+            { page?: number; limit?: number }
         >({
-            query: () => 'borrow',
+            query: ({ page = 1, limit = 10 }) => `borrow?page=${page}&limit=${limit}`,
             transformResponse: (response: {
                 success: boolean;
                 message: string;
-                data: { book: { title: string; isbn: string }; totalQuantity: number }[];
+                data: {
+                    borrows: { book: { title: string; isbn: string }; totalQuantity: number }[];
+                    pagination: {
+                        total: number;
+                        totalPages: number;
+                        currentPage: number;
+                        limit: number;
+                    };
+                };
             }) => response.data,
             providesTags: ['Borrows'],
         }),
+
     })
 })
 

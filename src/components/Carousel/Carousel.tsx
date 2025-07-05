@@ -8,17 +8,22 @@ const Carousel = () => {
     {
       id: 1,
       content: "Carousel 2 - Slide 1 Content",
-      imgSrc: "https://i.ibb.co/Lh6fP8k9/got.jpg",
+      imgSrc: "https://i.ibb.co/wZXXGhvb/thought-catalog-qk-CTQFXid-V8-unsplash-1.jpg",
     },
     {
       id: 2,
       content: "Carousel 2 - Slide 2 Content",
-      imgSrc: "https://i.ibb.co/7dK2WTcX/orv.png",
+      imgSrc: "https://i.ibb.co/k25FxYK9/thought-catalog-B1d-QCWz0-U2w-unsplash-1.jpg",
     },
     {
       id: 3,
       content: "Carousel 2 - Slide 3 Content",
-      imgSrc: "https://i.ibb.co/1Y8KBNDg/fantasy-book.jpg",
+      imgSrc: "https://i.ibb.co/7N0wCZft/orv-1.png",
+    },
+    {
+      id: 4,
+      content: "Carousel 2 - Slide 3 Content",
+      imgSrc: "https://i.ibb.co/5JCdhbS/got-1.jpg",
     },
   ];
 
